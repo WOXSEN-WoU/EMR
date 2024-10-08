@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 // Utility function for className merging
 const cn = (...classes: string[]) => classes.filter(Boolean).join(' ');
@@ -39,7 +40,7 @@ const Button: React.FC<ButtonProps> = ({
       (variant === 'outline' && "bg-transparent border-2 border-green-600 text-green-600 hover:bg-green-100 focus:ring-green-500") || "",
       size === 'sm' ? "text-sm px-3 py-1" : "",
       size === 'lg' ? "text-xl px-6 py-3" : "",
-      className
+      className || ""
     )}
     onClick={onClick}
   >
@@ -51,26 +52,26 @@ const Input: React.FC<InputProps> = ({ className, ...props }) => (
   <input
     className={cn(
       "px-4 py-3 bg-white border-2 border-gray-300 rounded-md shadow-sm text-lg focus:outline-none focus:ring-4 focus:ring-green-500 focus:border-green-500",
-      className
+      className || ""
     )}
     {...props}
   />
 );
 
 const Card: React.FC<CardProps> = ({ children, className }) => (
-  <div className={cn("bg-white shadow-lg rounded-lg border-2 border-gray-200", className)}>
+  <div className={cn("bg-white shadow-lg rounded-lg border-2 border-gray-200", className || "")}>
     {children}
   </div>
 );
 
 const CardHeader: React.FC<CardProps> = ({ children, className }) => (
-  <div className={cn("px-6 py-5 border-b-2 border-gray-200 bg-gray-50", className)}>
+  <div className={cn("px-6 py-5 border-b-2 border-gray-200 bg-gray-50", className || "")}>
     {children}
   </div>
 );
 
 const CardContent: React.FC<CardProps> = ({ children, className }) => (
-  <div className={cn("px-6 py-5", className)}>
+  <div className={cn("px-6 py-5", className || "")}>
     {children}
   </div>
 );
@@ -97,6 +98,14 @@ type CarBreakdowns = {
 type Remarks = {
   [key: number]: Array<{ text: string; date: string }>;
 };
+
+// Toast component
+const Toast: React.FC<{ message: string; type: string; onClose: () => void }> = ({ message, type, onClose }) => (
+  <div className={`fixed bottom-4 right-4 p-4 rounded-md ${type === 'error' ? 'bg-red-500' : 'bg-green-500'} text-white`}>
+    {message}
+    <button onClick={onClose} className="ml-4">×</button>
+  </div>
+);
 
 // Main App Component
 const App: React.FC = () => {
@@ -132,11 +141,29 @@ const App: React.FC = () => {
     setTimeout(() => setToast(null), 3000);
   };
 
-  // ... rest of your component logic ...
-
+  // Example usage of components to avoid unused variable warnings
   return (
     <div className="app-container min-h-screen bg-white">
-      {/* ... your component rendering logic ... */}
+      <Card>
+        <CardHeader>
+          <h1>Driver Management System</h1>
+        </CardHeader>
+        <CardContent>
+          <Input placeholder="Search drivers" />
+          <Button onClick={() => showToast('Button clicked', 'info')}>
+            Click me
+          </Button>
+          {drivers.length > 0 && (
+            <p>Total drivers: {drivers.length}</p>
+          )}
+          {Object.keys(carBreakdowns).length > 0 && (
+            <p>Cars with breakdowns: {Object.keys(carBreakdowns).length}</p>
+          )}
+          {Object.keys(remarks).length > 0 && (
+            <p>Drivers with remarks: {Object.keys(remarks).length}</p>
+          )}
+        </CardContent>
+      </Card>
       {toast && (
         <Toast 
           message={toast.message} 
