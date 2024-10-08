@@ -91,10 +91,12 @@ type Driver = {
   profilePhoto: string;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type CarBreakdowns = {
   [key: number]: boolean;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type Remarks = {
   [key: number]: Array<{ text: string; date: string }>;
 };
