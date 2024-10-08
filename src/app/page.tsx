@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+// Remove the Image import if not used
 
 // Utility function for className merging
 const cn = (...classes: string[]) => classes.filter(Boolean).join(' ');
@@ -109,14 +109,8 @@ const Toast: React.FC<{ message: string; type: string; onClose: () => void }> = 
 
 // Main App Component
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<string>('login');
-  const [userType, setUserType] = useState<string | null>(null);
-  const [selectedDriverId, setSelectedDriverId] = useState<number | null>(null);
-  const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
-  const [carBreakdowns, setCarBreakdowns] = useState<CarBreakdowns>({});
   const [toast, setToast] = useState<{ message: string; type: string } | null>(null);
   const [drivers, setDrivers] = useState<Driver[]>([]);
-  const [remarks, setRemarks] = useState<Remarks>({});
 
   useEffect(() => {
     // Initialize drivers with some data
@@ -155,12 +149,6 @@ const App: React.FC = () => {
           </Button>
           {drivers.length > 0 && (
             <p>Total drivers: {drivers.length}</p>
-          )}
-          {Object.keys(carBreakdowns).length > 0 && (
-            <p>Cars with breakdowns: {Object.keys(carBreakdowns).length}</p>
-          )}
-          {Object.keys(remarks).length > 0 && (
-            <p>Drivers with remarks: {Object.keys(remarks).length}</p>
           )}
         </CardContent>
       </Card>
