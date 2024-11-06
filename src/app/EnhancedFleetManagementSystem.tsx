@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from 'react'
-
-const [_setUserData, userData] = useState({ /* initial state here */ });
+import Image from 'next/image' // Import Image from next/image
 
 // Mock user data - in a real application, this would come from an API
 const mockUserData = {
@@ -166,13 +165,10 @@ export default function HealthWallet() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [userData, setUserData] = useState(mockUserData)
-  const [activeTab, setActiveTab] = useState('vitals')
+  const [activeTab, setActiveTab] = useState('vitals');
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically make an API call to authenticate the user
-    // For this example, we'll just simulate a successful login
     console.log('Logging in with:', email, password)
     setIsLoggedIn(true)
   }
@@ -224,8 +220,8 @@ export default function HealthWallet() {
         </button>
       </header>
       <main style={styles.main}>
-        <h2 style={{marginBottom: '10px', fontSize: '24px'}}>Welcome, {userData.name}</h2>
-        <p style={{marginBottom: '20px', color: '#666', fontSize: '18px'}}>Age: {userData.age}, Blood Type: {userData.bloodType}</p>
+        <h2 style={{marginBottom: '10px', fontSize: '24px'}}>Welcome, {mockUserData.name}</h2>
+        <p style={{marginBottom: '20px', color: '#666', fontSize: '18px'}}>Age: {mockUserData.age}, Blood Type: {mockUserData.bloodType}</p>
         <div style={styles.tabContainer}>
           <button 
             onClick={() => setActiveTab('vitals')} 
@@ -263,16 +259,16 @@ export default function HealthWallet() {
             <div style={styles.grid}>
               <div style={styles.card}>
                 <h3 style={styles.cardTitle}>Height</h3>
-                <p style={styles.cardContent}>{userData.height}</p>
+                <p style={styles.cardContent}>{mockUserData.height}</p>
               </div>
               <div style={styles.card}>
                 <h3 style={styles.cardTitle}>Weight</h3>
-                <p style={styles.cardContent}>{userData.weight}</p>
+                <p style={styles.cardContent}>{mockUserData.weight}</p>
               </div>
               <div style={styles.card}>
                 <h3 style={styles.cardTitle}>Medical Conditions</h3>
                 <ul style={styles.list}>
-                  {userData.medicalConditions.map((condition, index) => (
+                  {mockUserData.medicalConditions.map((condition, index) => (
                     <li key={index} style={styles.cardContent}>{condition}</li>
                   ))}
                 </ul>
@@ -281,7 +277,7 @@ export default function HealthWallet() {
           )}
           {activeTab === 'medications' && (
             <div style={styles.grid}>
-              {userData.medications.map((medication, index) => (
+              {mockUserData.medications.map((medication, index) => (
                 <div key={index} style={styles.card}>
                   <h3 style={styles.cardTitle}>{medication.name}</h3>
                   <p style={styles.cardContent}>{medication.dosage}, {medication.frequency}</p>
@@ -291,7 +287,7 @@ export default function HealthWallet() {
           )}
           {activeTab === 'tests' && (
             <div style={styles.grid}>
-              {userData.recentTests.map((test, index) => (
+              {mockUserData.recentTests.map((test, index) => (
                 <div key={index} style={styles.card}>
                   <h3 style={styles.cardTitle}>{test.name}</h3>
                   <p style={styles.cardContent}>
@@ -305,9 +301,9 @@ export default function HealthWallet() {
           )}
           {activeTab === 'scans' && (
             <div style={styles.grid}>
-              {userData.scans.map((scan, index) => (
+              {mockUserData.scans.map((scan, index) => (
                 <div key={index} style={styles.card}>
-                  <img src={scan.imageUrl} alt={scan.description} style={styles.scanImage} />
+                  <Image src={scan.imageUrl} alt={scan.description} width={500} height={150} style={styles.scanImage} />
                   <h3 style={styles.cardTitle}>{scan.type}</h3>
                   <p style={styles.cardContent}>
                     Date: {scan.date}<br />
@@ -319,7 +315,7 @@ export default function HealthWallet() {
           )}
           {activeTab === 'appointments' && (
             <div style={styles.grid}>
-              {userData.appointments.map((appointment, index) => (
+              {mockUserData.appointments.map((appointment, index) => (
                 <div key={index} style={styles.card}>
                   <h3 style={styles.cardTitle}>{appointment.doctor}</h3>
                   <p style={styles.cardContent}>
